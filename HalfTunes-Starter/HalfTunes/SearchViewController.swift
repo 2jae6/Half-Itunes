@@ -51,7 +51,8 @@ class SearchViewController: UIViewController {
     return documentsPath.appendingPathComponent(url.lastPathComponent)
   }
   //내가 추가했음 다운로드세션
-  lazy var downloadsSession: URLSession = { let configuration = URLSessionConfiguration.default
+  lazy var downloadsSession: URLSession = {
+    let configuration = URLSessionConfiguration.background(withIdentifier: "bgSessionConfiguration")
     return URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
   }()
 
@@ -88,7 +89,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     cell.delegate = self
 
     let track = searchResults[indexPath.row]
-    cell.configure(track: track, downloaded: track.downloaded)
+    cell.configure(track: track, downloaded: track.downloaded, download: downloadService.activeDownloads[track.previewURL])
 
     return cell
   }

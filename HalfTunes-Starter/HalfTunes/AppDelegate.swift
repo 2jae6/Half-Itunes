@@ -33,6 +33,8 @@
  @UIApplicationMain
  class AppDelegate: UIResponder, UIApplicationDelegate {
   
+  var backgroundSessionCompletionHandler: (() ->Void)?
+  
   var window: UIWindow?
   let tintColor =  UIColor(red: 242/255, green: 71/255, blue: 63/255, alpha: 1)
   
@@ -41,6 +43,10 @@
     return true
   }
   
+  func application(_ application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: @escaping () -> Void) {
+    backgroundSessionCompletionHandler = completionHandler
+  }
+
   // MARK - App Theme Customization
   
   private func customizeAppearance() {
@@ -50,5 +56,7 @@
     UINavigationBar.appearance().tintColor = UIColor.white
     UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey(rawValue: NSAttributedStringKey.foregroundColor.rawValue):UIColor.white]
   }
+  
+
  }
  
